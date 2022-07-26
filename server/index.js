@@ -7,6 +7,7 @@ var cors = require('cors')
 const mongoose = require('mongoose')
 
 const { MONGO_URI } = process.env
+console.log('===', MONGO_URI)
 mongoose.connect(MONGO_URI)
 .then(() => {
     console.log("Successfully connected to database")
@@ -23,7 +24,7 @@ const router = express.Router()
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 app.use(bodyParser.raw())
-app.use(cors({origin:'http:/localhost:3000'}))
+app.use(cors({origin:'http://localhost:3000'}))
 
 const apiRoutes = require('./routes/api')
 app.use('/api/v1', apiRoutes)
