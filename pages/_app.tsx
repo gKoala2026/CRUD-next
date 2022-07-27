@@ -9,27 +9,29 @@ import { getTable, addUser, delUser, updateUser } from '../service/table'
 function MyApp({ Component, pageProps }: AppProps) {
 
   const [users, setUsers] = React.useState<Array<IUser>>(UserContextDefaultValues.list);
+  const [eUser, setEUser] = React.useState<IUser>(UserContextDefaultValues.editUser);
 
   const addNew = (newUser: IUser) => {
     addUser((res:any) => {
       if(res) setUsers(res)
     }, newUser)
-    // setUsers([...users, newUser]);
   };
 
-  const update = ( newUser: IUser ) => {
-
+  const update = ( nUser: IUser ) => {
     updateUser((res:any) => {
       if(res) setUsers(res)
-    })
+    }, nUser)
   };
 
   const del = ( email: String ) => {
     delUser((res:any) => {
       if(res) setUsers(res)
-      console.log('--------',res)
     }, email)
   };
+  const edit = ( user: IUser ) => {
+      if(user) setEUser(user)
+  };
+
 
 
   React.useEffect(() => {
@@ -40,7 +42,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    <UserContext.Provider value={{ list:users, add: addNew, update: update, delete: del}}>
+    <UserContext.Provider value={{ list:users, editUser: eUser, add: addNew, update: update, delete: del, editable: edit}}>
       <ThemeProvider theme={theme}>
         <Component {...pageProps} />
       </ThemeProvider>

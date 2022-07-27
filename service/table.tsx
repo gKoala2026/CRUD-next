@@ -26,8 +26,8 @@ export const delUser = ( subscriber: any, email:String ) => {
     })
 }
 
-export const updateUser = ( subscriber: any ) => {
-    instance.post('/update')
+export const updateUser = ( subscriber: any, user: any ) => {
+    instance.post('/update', user)
     .then((res:any)=>{
         subscriber(res.data)
     })

@@ -27,6 +27,8 @@ exports.delUser = async( req, res, next ) => {
 }
 
 exports.updateUser = async( req, res, next ) => {
+    const { name, email, adress } = req.body
+    await UserModel.updateOne({email}, { name, adress })
     const users = await UserModel.find()
     res.json(users);
 }

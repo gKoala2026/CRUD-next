@@ -5,7 +5,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-import TableEditor from '../components/TableEditor'
+import TableHeader from '../components/Table/TableHeader'
 
 import { UserContext } from '../contexts/userContext'
 
@@ -27,21 +27,16 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableEditor />
-              <TableRow>
-                <TableCell sx={{display:'none'}} >_id</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Adress</TableCell>
-                <TableCell>action</TableCell>
-              </TableRow>
-            </TableHead>
+            <TableHeader />
             <TableBody>
               {userContext.list.map((row, index) => (
                 <TableRow
                   key={index}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  onClick={() => {
+                    userContext.editable(row)
+                    console.log('---------', userContext.editUser)
+                    }}
                 >
                   <TableCell sx={{display:'none'}} >{row.name}</TableCell>
                   <TableCell>{row.name}</TableCell>
@@ -53,7 +48,7 @@ const Home: NextPage = () => {
                           variant="outlined" 
                           onClick={() => userContext.delete( row.email )} 
                           startIcon={<DeleteForeverIcon />}>
-                              Delete
+                            Delete
                           </Button>
                       </Stack>
                   </TableCell>
